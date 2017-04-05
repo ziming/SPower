@@ -40,14 +40,13 @@ class PhoneKeyPad
 
     private function getNumPressesFromLetter($letter)
     {
-        // search array for letter
-        foreach ($this->numToLetterMap as $letterArray) {
 
-            $indexFound = array_search($letter, $letterArray);
+        foreach ($this->numToLetterMap as $letters) {
+
+            $indexFound = array_search($letter, $letters);
             if ($indexFound !== false) {
                 return $indexFound + 1;
             }
-
         }
 
         return 0;
@@ -68,7 +67,9 @@ class PhoneKeyPad
 
     private function getKeyFromLetter($letter)
     {
-        return collect($this->numToLetterMap)->search(function ($letters, $key) use ($letter) {
+
+        // The search method searches the collection for the given value and returns its key if found.
+        return collect($this->numToLetterMap)->search(function ($letters) use ($letter) {
             return in_array($letter, $letters);
         });
 
@@ -81,12 +82,12 @@ class PhoneKeyPad
 
         $possibleCombinations = $this->getAllLetterCombinationsFromNumber($num);
 
-        $result = collect($possibleCombinations)->filter(function ($value, $key) {
+        // added a call to values() to reset array keys just to make it a little more similar
+        // but not required for tests to pass I think.
+        return collect($possibleCombinations)->filter(function ($value, $key) {
             return in_array($value, $this->phoneDict);
-        })->toArray();
+        })->values()->toArray();
 
-        // resetting array keys for easier comparison in tests as without it u may get something like like 40 => 'abc
-        return array_values($result);
     }
 
     private function loadDictionary()

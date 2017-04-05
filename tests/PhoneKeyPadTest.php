@@ -2,6 +2,8 @@
 
 use PHPUnit\Framework\TestCase;
 
+use App\PhoneKeyPad;
+
 class PhoneKeyPadTest extends TestCase
 {
 
@@ -16,6 +18,20 @@ class PhoneKeyPadTest extends TestCase
 
         // Assert
         $this->assertEquals(13, $numPresses);
+
+    }
+
+    /** @test */
+    function can_return_number_that_the_word_could_represent() {
+
+        // Arrange
+        $phoneKeyPad = new PhoneKeyPad;
+
+        // Act
+        $numberRep = $phoneKeyPad->getNumberRepFromWord('hello');
+
+        // Assert
+        $this->assertEquals(43556, $numberRep);
 
     }
 

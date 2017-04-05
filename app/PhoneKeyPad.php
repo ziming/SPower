@@ -125,11 +125,10 @@ class PhoneKeyPad
             return $this->phoneDict;
         }
 
-        // if the dictionary is really huge, something like Java 8 streams will be really helpful here.
+        // if the dictionary is really huge, something like buffered reader with Java 8 streams could be really helpful here.
         // https://github.com/ziming/aa-assignment-4/blob/master/src/aa/Problem1Main.java
 
         // But this is small enough so let's just load it all into memory
-
         $contents = file_get_contents('Words.txt');
 
         return preg_split('/\s+/', $contents);

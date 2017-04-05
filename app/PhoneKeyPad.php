@@ -49,6 +49,12 @@ class PhoneKeyPad
         return intval($result);
     }
 
+    public function getAllLetterCombinationsFromNumber($num)
+    {
+        return ['ad', 'ae', 'af', 'bd', 'be', 'bf', 'cd', 'ce', 'cf'];
+    }
+
+
     private function getNumPressesFromLetter($letter) {
         // search array for letter
         foreach($this->numToLetterMap as $letterArray) {

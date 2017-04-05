@@ -80,6 +80,41 @@ class PhoneKeyPad
 
     }
 
+    public function getAllDictionaryWordsFromNumber($num)
+    {
+
+        $this->phoneDict = $this->loadDictionary();
+
+        $possibleCombinations = $this->getAllLetterCombinationsFromNumber($num);
+
+        $result = collect($possibleCombinations)->filter(function ($value, $key) {
+            return in_array($value, $this->phoneDict);
+        })->toArray();
+
+        // resetting array keys for easier comparison in tests as without it u may get something like like 40 => 'abc
+        return array_values($result);
+    }
+
+    private function loadDictionary()
+    {
+
+        // only populate dictionary when truly required.
+
+        if ($this->phoneDict !== null) {
+            return $this->phoneDict;
+        }
+
+        // if the dictionary is really huge, something like Java 8 streams will be really helpful here.
+        // https://github.com/ziming/aa-assignment-4/blob/master/src/aa/Problem1Main.java
+
+        // But this is small enough so let's just load it all into memory
+
+        $contents = file_get_contents('Words.txt');
+
+        return preg_split('/\s+/', $contents);
+
+    }
+
     public function getAllLetterCombinationsFromNumber($num)
     {
         $numbers = array_map('intval', str_split($num));
@@ -110,49 +145,5 @@ class PhoneKeyPad
         }
 
         return $results;
-    }
-
-    public function getAllDictionaryWordsFromNumber($num)
-    {
-
-        $this->phoneDict = $this->loadDictionary();
-
-        if ($num === 2355) {
-            return ['bell', 'cell'];
-        }
-
-        if ($num === 4663) {
-            return ['good', 'goof', 'gone', 'home', 'hone', 'hood', 'hoof'];
-        }
-
-//        $possibleCombinations = $this->getAllLetterCombinationsFromNumber($num);
-//
-//        $result = collect($possibleCombinations)->filter(function($value, $key) {
-//            return in_array($value, $this->phoneDict);
-//        })->toArray();
-//
-//        // resetting array keys for easier comparison in tests as without it u may get something like like 40 => 'abc
-//        return array_values($result);
-        return [];
-    }
-
-    private function loadDictionary()
-    {
-
-        // only populate dictionary when truly required.
-
-        if ($this->phoneDict !== null) {
-            return $this->phoneDict;
-        }
-
-        // if the dictionary is really huge, something like Java 8 streams will be really helpful here.
-        // https://github.com/ziming/aa-assignment-4/blob/master/src/aa/Problem1Main.java
-
-        // But this is small enough so let's just load it all into memory
-
-        $contents = file_get_contents('Words.txt');
-
-        return preg_split('/\s+/', $contents);
-
     }
 }

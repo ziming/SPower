@@ -1,4 +1,5 @@
 <?php
+
 namespace App;
 
 class PhoneKeyPad
@@ -25,28 +26,58 @@ class PhoneKeyPad
 
     }
 
-    public function getNumPressesFromWord($word) {
+    public function getNumPressesFromWord($word)
+    {
 
         $letters = str_split($word);
 
-        return collect($letters)->map(function($letter) {
+        return collect($letters)->map(function ($letter) {
 
             return $this->getNumPressesFromLetter($letter);
 
         })->sum();
     }
 
+    private function getNumPressesFromLetter($letter)
+    {
+        // search array for letter
+        foreach ($this->numToLetterMap as $letterArray) {
+
+            $indexFound = array_search($letter, $letterArray);
+            if ($indexFound !== false) {
+                return $indexFound + 1;
+            }
+
+        }
+
+        return 0;
+    }
+
     public function getNumberRepFromWord($word)
     {
         $letters = str_split($word);
 
-        $result = collect($letters)->map(function($letter) {
+        $result = collect($letters)->map(function ($letter) {
 
             return $this->getKeyFromLetter($letter);
 
         })->implode('');
 
         return intval($result);
+    }
+
+    private function getKeyFromLetter($letter)
+    {
+
+        foreach ($this->numToLetterMap as $key => $letters) {
+
+            if (in_array($letter, $letters)) {
+                return $key;
+            }
+        }
+
+        return -1;
+
     }
 
     public function getAllLetterCombinationsFromNumber($num)
@@ -78,35 +109,8 @@ class PhoneKeyPad
         return [];
     }
 
-
-    private function getNumPressesFromLetter($letter) {
-        // search array for letter
-        foreach($this->numToLetterMap as $letterArray) {
-
-            $indexFound = array_search($letter, $letterArray);
-            if ($indexFound !== false) {
-                return $indexFound + 1;
-            }
-
-        }
-
-        return 0;
-    }
-
-    private function getKeyFromLetter($letter) {
-
-        foreach($this->numToLetterMap as $key => $letters) {
-
-            if (in_array($letter, $letters)) {
-                return $key;
-            }
-        }
-
-        return -1;
-
-    }
-
-    private function loadDictionary() {
+    private function loadDictionary()
+    {
 
         // only populate dictionary when truly required.
 

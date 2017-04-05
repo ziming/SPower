@@ -1,8 +1,7 @@
 <?php
 
-use PHPUnit\Framework\TestCase;
-
 use App\PhoneKeyPad;
+use PHPUnit\Framework\TestCase;
 
 class PhoneKeyPadTest extends TestCase
 {

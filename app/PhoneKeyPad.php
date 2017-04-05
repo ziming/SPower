@@ -112,7 +112,9 @@ class PhoneKeyPad
 
     public function getAllLetterCombinationsFromNumber($num)
     {
-        $numbers = array_map('intval', str_split($num));
+//        $numbers = array_map('intval', str_split($num));
+
+        $numbers = str_split($num);
 
         // Credits and Inspiration to:
         // https://codereview.stackexchange.com/questions/91645/letter-combinations-of-phone-dial-pad-number

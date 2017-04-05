@@ -82,7 +82,34 @@ class PhoneKeyPad
 
     public function getAllLetterCombinationsFromNumber($num)
     {
-        return ['ad', 'ae', 'af', 'bd', 'be', 'bf', 'cd', 'ce', 'cf'];
+        $numbers = array_map('intval', str_split($num));
+
+        // Credits and Inspiration to:
+        // https://codereview.stackexchange.com/questions/91645/letter-combinations-of-phone-dial-pad-number
+
+        $results = [''];
+
+        // [2, 3]
+        foreach ($numbers as $number) {
+
+            // 1st iter: ['a', 'b', 'c']
+            // 2nd iter: ['d', 'e', 'f']
+            $letters = $this->numToLetterMap[$number];
+
+            for ($i = count($results); $i > 0; $i--) {
+                // 1st iter: count(results) == 1
+
+                // intermediateResult is a String
+                // array shift pop the first element at the had
+                $intermediateResult = array_shift($results);
+
+                foreach ($letters as $letter) {
+                    $results[] = $intermediateResult . $letter;
+                }
+            }
+        }
+
+        return $results;
     }
 
     public function getAllDictionaryWordsFromNumber($num)

@@ -68,15 +68,9 @@ class PhoneKeyPad
 
     private function getKeyFromLetter($letter)
     {
-
-        foreach ($this->numToLetterMap as $key => $letters) {
-
-            if (in_array($letter, $letters)) {
-                return $key;
-            }
-        }
-
-        return -1;
+        return collect($this->numToLetterMap)->search(function ($letters, $key) use ($letter) {
+            return in_array($letter, $letters);
+        });
 
     }
 

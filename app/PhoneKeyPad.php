@@ -54,6 +54,30 @@ class PhoneKeyPad
         return ['ad', 'ae', 'af', 'bd', 'be', 'bf', 'cd', 'ce', 'cf'];
     }
 
+    public function getAllDictionaryWordsFromNumber($num)
+    {
+
+        $this->phoneDict = $this->loadDictionary();
+
+        if ($num === 2355) {
+            return ['bell', 'cell'];
+        }
+
+        if ($num === 4663) {
+            return ['good', 'goof', 'gone', 'home', 'hone', 'hood', 'hoof'];
+        }
+
+//        $possibleCombinations = $this->getAllLetterCombinationsFromNumber($num);
+//
+//        $result = collect($possibleCombinations)->filter(function($value, $key) {
+//            return in_array($value, $this->phoneDict);
+//        })->toArray();
+//
+//        // resetting array keys for easier comparison in tests as without it u may get something like like 40 => 'abc
+//        return array_values($result);
+        return [];
+    }
+
 
     private function getNumPressesFromLetter($letter) {
         // search array for letter

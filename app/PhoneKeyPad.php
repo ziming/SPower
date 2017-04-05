@@ -8,6 +8,9 @@ class PhoneKeyPad
     private $numToLetterMap;
     private $phoneDict;
 
+    /**
+     * PhoneKeyPad constructor.
+     */
     public function __construct()
     {
         $this->numToLetterMap = [
@@ -26,6 +29,10 @@ class PhoneKeyPad
 
     }
 
+    /**
+     * @param $word
+     * @return mixed
+     */
     public function getNumPressesFromWord($word)
     {
 
@@ -38,6 +45,10 @@ class PhoneKeyPad
         })->sum();
     }
 
+    /**
+     * @param $letter
+     * @return int|mixed
+     */
     private function getNumPressesFromLetter($letter)
     {
 
@@ -52,6 +63,10 @@ class PhoneKeyPad
         return 0;
     }
 
+    /**
+     * @param $word
+     * @return int
+     */
     public function getNumberRepFromWord($word)
     {
         $letters = str_split($word);
@@ -65,6 +80,10 @@ class PhoneKeyPad
         return intval($result);
     }
 
+    /**
+     * @param $letter
+     * @return mixed
+     */
     private function getKeyFromLetter($letter)
     {
 
@@ -75,6 +94,10 @@ class PhoneKeyPad
 
     }
 
+    /**
+     * @param $num
+     * @return array
+     */
     public function getAllDictionaryWordsFromNumber($num)
     {
 
@@ -90,6 +113,9 @@ class PhoneKeyPad
 
     }
 
+    /**
+     * @return array|null
+     */
     private function loadDictionary()
     {
 
@@ -110,6 +136,10 @@ class PhoneKeyPad
 
     }
 
+    /**
+     * @param $num
+     * @return array
+     */
     public function getAllLetterCombinationsFromNumber($num)
     {
 //        $numbers = array_map('intval', str_split($num));

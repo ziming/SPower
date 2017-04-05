@@ -36,6 +36,19 @@ class PhoneKeyPad
         })->sum();
     }
 
+    public function getNumberRepFromWord($word)
+    {
+        $letters = str_split($word);
+
+        $result = collect($letters)->map(function($letter) {
+
+            return $this->getKeyFromLetter($letter);
+
+        })->implode('');
+
+        return intval($result);
+    }
+
     private function getNumPressesFromLetter($letter) {
         // search array for letter
         foreach($this->numToLetterMap as $letterArray) {
@@ -48,6 +61,19 @@ class PhoneKeyPad
         }
 
         return 0;
+    }
+
+    private function getKeyFromLetter($letter) {
+
+        foreach($this->numToLetterMap as $key => $letters) {
+
+            if (in_array($letter, $letters)) {
+                return $key;
+            }
+        }
+
+        return -1;
+
     }
 
 }

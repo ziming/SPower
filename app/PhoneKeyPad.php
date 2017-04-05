@@ -141,7 +141,6 @@ class PhoneKeyPad
      */
     public function getAllLetterCombinationsFromNumber($num)
     {
-//        $numbers = array_map('intval', str_split($num));
 
         $numbers = str_split($num);
 

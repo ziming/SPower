@@ -1,0 +1,107 @@
+#! /usr/bin/env php
+
+<?php
+
+use App\PhoneKeyPad;
+use Symfony\Component\Console\Application;
+use Symfony\Component\Console\Input\InputArgument;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\OutputInterface;
+
+require 'vendor/autoload.php';
+
+$app = new Application('Singapore Power Keypad App', '0.1');
+
+// No need over complicate things by giving each console command its own classes
+
+// on project root please run chmod +x ./keyPadApp
+
+// Q1
+$app->register('word-to-num-presses')
+    ->addArgument('word', InputArgument::REQUIRED)
+    ->setDescription('Given a word, return the total number of key presses required to spell the word using the keypad.')
+    ->setCode(function (InputInterface $input, OutputInterface $output) {
+
+        $word = $input->getArgument('word');
+
+        if (preg_match('/^[A-Za-z]+$/', $word) !== 1) {
+            $output->writeln('<error>A single word with a to z only please!</error>');
+            return;
+        }
+
+        $word = strtolower($word);
+
+        $phoneKeyPad = new PhoneKeyPad;
+
+        $result = $phoneKeyPad->getNumPressesFromWord($word);
+
+        $output->writeln("<info>${result}</info>");
+    });
+
+// Q2
+$app->register('word-to-num-rep')
+    ->addArgument('word', InputArgument::REQUIRED)
+    ->setDescription('Given a word, return the number that the word could represent.')
+    ->setCode(function (InputInterface $input, OutputInterface $output) {
+
+        $word = $input->getArgument('word');
+
+        if (preg_match('/^[A-Za-z]+$/', $word) !== 1) {
+            $output->writeln('<error>A single word with a to z only please!</error>');
+            return;
+        }
+
+        $word = strtolower($word);
+
+        $phoneKeyPad = new PhoneKeyPad;
+
+        $result = $phoneKeyPad->getNumberRepFromWord($word);
+
+        $output->writeln("<info>${result}</info>");
+    });
+
+// Q3
+$app->register('num-to-letters-combi')
+    ->addArgument('number', InputArgument::REQUIRED)
+    ->setDescription('Given a number, return all possible letter combinations that the number could represent.')
+    ->setCode(function (InputInterface $input, OutputInterface $output) {
+
+        $number = $input->getArgument('number');
+
+        if (preg_match('/^[2-9]+$/', $number) !== 1) {
+            $output->writeln('<error>Only 2 to 9 as input please!</error>');
+            return;
+        }
+
+        $number = intval($number);
+
+        $phoneKeyPad = new PhoneKeyPad;
+
+        $result = implode(' | ', $phoneKeyPad->getAllLetterCombinationsFromNumber($number));
+
+        $output->writeln("<info>${result}</info>");
+    });
+
+// Q4
+$app->register('num-to-dict-words')
+    ->addArgument('number', InputArgument::REQUIRED)
+    ->setDescription('Given a number, return all possible word combinations from Dictionary')
+    ->setCode(function (InputInterface $input, OutputInterface $output) {
+
+        $number = $input->getArgument('number');
+
+        if (preg_match('/^[2-9]+$/', $number) !== 1) {
+            $output->writeln('<error>Only 2 to 9 as input please!</error>');
+            return;
+        }
+
+        $number = intval($number);
+
+        $phoneKeyPad = new PhoneKeyPad;
+
+        $result = implode(' | ', $phoneKeyPad->getAllDictionaryWordsFromNumber($number));
+
+        $output->writeln("<info>${result}</info>");
+    });
+
+$app->run();

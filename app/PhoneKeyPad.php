@@ -52,6 +52,7 @@ class PhoneKeyPad
     private function getNumPressesFromLetter($letter)
     {
 
+
         foreach ($this->numToLetterMap as $letters) {
 
             $indexFound = array_search($letter, $letters);
@@ -107,8 +108,8 @@ class PhoneKeyPad
 
         // added a call to values() to reset array keys just to make it a little more similar
         // but not required for tests to pass I think.
-        return collect($possibleCombinations)->intersect($this->phoneDict)->values()->toArray();
-
+        return collect($possibleCombinations)->intersect($this->phoneDict)
+            ->values()->toArray();
 
     }
 

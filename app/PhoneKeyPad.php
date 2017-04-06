@@ -52,22 +52,15 @@ class PhoneKeyPad
     private function getNumPressesFromLetter($letter)
     {
 
-        $numPresses = 0;
+        // is a letterToNumMap worth creating?
 
-        // normal loop simpler, this is just practice
-        collect($this->numToLetterMap)->each(function ($letters) use (&$letter, &$numPresses) {
-
-            $indexFound = array_search($letter, $letters);
-
-            if ($indexFound !== false) {
-                $numPresses = $indexFound + 1;
-                return false; // early exit, the implementation doesn't allow me to just return $indexFound + 1
-            }
-
-            // Editor bug here saying missing return statement, there isn't any. Ignore it.
-        });
-
-        return $numPresses;
+        // this is less efficient and less straight forward than the previous 2 solutions
+        // prob change it back to solution 1 later.
+        return collect($this->numToLetterMap)->filter(function ($letters) use (&$letter) {
+            return in_array($letter, $letters);
+        })->reduce(function ($offset, $letters) use (&$letter) {
+            return $offset + array_search($letter, $letters);
+        }, 1);
 
     }
 

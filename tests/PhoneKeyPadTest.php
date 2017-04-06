@@ -12,11 +12,9 @@ class PhoneKeyPadTest extends TestCase
         // Arrange
         $phoneKeyPad = new PhoneKeyPad;
 
-        // Act
-        $numPresses = $phoneKeyPad->getNumPressesFromWord('hello');
-
-        // Assert
-        $this->assertEquals(13, $numPresses);
+        // Act & Assert
+        $this->assertEquals(13, $phoneKeyPad->getNumPressesFromWord('hello'));
+        $this->assertEquals(56, $phoneKeyPad->getNumPressesFromWord('abcdefghijklmnopqrstuvwxyz'));
 
     }
 
@@ -26,11 +24,9 @@ class PhoneKeyPadTest extends TestCase
         // Arrange
         $phoneKeyPad = new PhoneKeyPad;
 
-        // Act
-        $numberRep = $phoneKeyPad->getNumberRepFromWord('hello');
+        // Act & Assert
+        $this->assertEquals(43556, $phoneKeyPad->getNumberRepFromWord('hello'));
 
-        // Assert
-        $this->assertEquals(43556, $numberRep);
 
     }
 

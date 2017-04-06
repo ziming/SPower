@@ -6,7 +6,6 @@ class PhoneKeyPad
 {
 
     private $numToLetterMap;
-    private $letterToNumMap;
     private $phoneDict;
 
     /**

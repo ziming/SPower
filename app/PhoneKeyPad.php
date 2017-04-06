@@ -54,6 +54,7 @@ class PhoneKeyPad
 
         $numPresses = 0;
 
+        // normal loop simpler, this is just practice
         collect($this->numToLetterMap)->each(function ($letters) use (&$letter, &$numPresses) {
 
             $indexFound = array_search($letter, $letters);
@@ -95,7 +96,7 @@ class PhoneKeyPad
     {
 
         // The search method searches the collection for the given value and returns its key if found.
-        return collect($this->numToLetterMap)->search(function ($letters) use ($letter) {
+        return collect($this->numToLetterMap)->search(function ($letters) use (&$letter) {
             return in_array($letter, $letters);
         });
 
@@ -155,11 +156,9 @@ class PhoneKeyPad
 
         $results = [''];
 
-        // [2, 3]
+        // Keys Example : [2, 3]
         foreach ($numbers as $number) {
 
-            // 1st iter: ['a', 'b', 'c']
-            // 2nd iter: ['d', 'e', 'f']
             $letters = $this->numToLetterMap[$number];
 
             for ($i = count($results); $i > 0; $i--) {

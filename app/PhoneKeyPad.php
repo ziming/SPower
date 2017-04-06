@@ -6,6 +6,7 @@ class PhoneKeyPad
 {
 
     private $numToLetterMap;
+    private $letterToNumMap;
     private $phoneDict;
 
     /**
@@ -52,16 +53,22 @@ class PhoneKeyPad
     private function getNumPressesFromLetter($letter)
     {
 
+        $numPresses = 0;
 
-        foreach ($this->numToLetterMap as $letters) {
+        collect($this->numToLetterMap)->each(function ($letters) use (&$letter, &$numPresses) {
 
             $indexFound = array_search($letter, $letters);
-            if ($indexFound !== false) {
-                return $indexFound + 1;
-            }
-        }
 
-        return 0;
+            if ($indexFound !== false) {
+                $numPresses = $indexFound + 1;
+                return false; // early exit, the implementation doesn't allow me to just return $indexFound + 1
+            }
+
+            // Editor bug here saying missing return statement, there isn't any. Ignore it.
+        });
+
+        return $numPresses;
+
     }
 
     /**

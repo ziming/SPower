@@ -54,13 +54,16 @@ class PhoneKeyPad
 
         // is a letterToNumMap worth creating?
 
-        // this is less efficient and less straight forward than the previous 2 solutions
-        // prob change it back to solution 1 later.
-        return collect($this->numToLetterMap)->filter(function ($letters) use (&$letter) {
-            return in_array($letter, $letters);
-        })->reduce(function ($offset, $letters) use (&$letter) {
-            return $offset + array_search($letter, $letters);
-        }, 1);
+        foreach ($this->numToLetterMap as $letterArray) {
+
+            $indexFound = array_search($letter, $letterArray);
+            if ($indexFound !== false) {
+                return $indexFound + 1;
+            }
+
+        }
+
+        return 0;
 
     }
 

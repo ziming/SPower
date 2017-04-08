@@ -24,7 +24,7 @@ $app->register('word-to-num-presses')
 
         $word = $input->getArgument('word');
 
-        if (preg_match('/^[A-Za-z]+$/', $word) !== 1) {
+        if (preg_match('/^[A-z]+$/', $word) !== 1) {
             $output->writeln('<error>A single word with a to z only please!</error>');
             return;
         }
@@ -46,7 +46,7 @@ $app->register('word-to-num-rep')
 
         $word = $input->getArgument('word');
 
-        if (preg_match('/^[A-Za-z]+$/', $word) !== 1) {
+        if (preg_match('/^[A-z]+$/', $word) !== 1) {
             $output->writeln('<error>A single word with a to z only please!</error>');
             return;
         }
